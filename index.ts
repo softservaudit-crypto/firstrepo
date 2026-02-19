@@ -1,53 +1,56 @@
-// index.ts
-
-// Type definitions for the personal data form
 interface PersonalData {
     name: string;
     email: string;
-    phone: string;
+    age: number;
+    gender: string;
 }
 
-// Function to validate the form data
 function validateFormData(data: PersonalData): boolean {
-    // Basic validation for empty fields and email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!data.name || !data.email || !data.phone) {
+    if (!data.name || !data.email || !data.age || !data.gender) {
         return false;
     }
     if (!emailRegex.test(data.email)) {
         return false;
     }
+    if (data.age < 1 || data.age > 150) {
+        return false;
+    }
+    if (!["male", "female", "other"].includes(data.gender)) {
+        return false;
+    }
     return true;
 }
 
-// Function to handle form submission
 function handleSubmit(event: Event): void {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const formData: PersonalData = {
-        name: (form.querySelector('#name') as HTMLInputElement).value,
-        email: (form.querySelector('#email') as HTMLInputElement).value,
-        phone: (form.querySelector('#phone') as HTMLInputElement).value,
+        name: (form.querySelector("#name") as HTMLInputElement).value.trim(),
+        email: (form.querySelector("#email") as HTMLInputElement).value.trim(),
+        age: parseInt((form.querySelector("#age") as HTMLInputElement).value, 10),
+        gender: (form.querySelector("#gender") as HTMLSelectElement).value,
     };
     if (validateFormData(formData)) {
-        console.log('Form submitted successfully:', formData);
-        // Proceed with form submission (API call, etc.)
+        fetch("/api/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    console.log("Form submitted successfully:", formData);
+                } else {
+                    console.error("Submission failed:", data.error);
+                }
+            })
+            .catch((err) => {
+                console.error("Network error:", err);
+            });
     } else {
-        console.error('Validation failed. Please check your input.');
+        console.error("Validation failed. Please check your input.");
     }
 }
 
-// Sample HTML form
-const formHTML = `
-<form id='personal-data-form' onsubmit='handleSubmit(event)'>
-    <label for='name'>Name:</label>
-    <input type='text' id='name' required />
-    <label for='email'>Email:</label>
-    <input type='email' id='email' required />
-    <label for='phone'>Phone:</label>
-    <input type='tel' id='phone' required />
-    <button type='submit'>Submit</button>
-</form>
-`;
-
-document.body.innerHTML += formHTML;
+export { PersonalData, validateFormData, handleSubmit };
