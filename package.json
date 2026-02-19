@@ -1,1 +1,20 @@
-{\n  "name": "my-typescript-form-app",\n  "version": "1.0.0",\n  "description": "A TypeScript form application",\n  "main": "index.js",\n  "scripts": {\n    "start": "ts-node src/index.ts"\n  },\n  "devDependencies": {\n    "typescript": "^4.0.0",\n    "ts-node": "^10.0.0",\n    "@types/node": "^14.14.0",\n    "@types/express": "^4.17.0"\n  },\n  "dependencies": {\n    "express": "^4.17.1"\n  }\n}
+{
+  "name": "my-typescript-form-app",
+  "version": "1.0.0",
+  "description": "A TypeScript form application with Express backend",
+  "main": "src/server.ts",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.0",
+    "ts-node": "^10.0.0",
+    "@types/node": "^14.14.0",
+    "@types/express": "^4.17.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

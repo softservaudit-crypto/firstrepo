@@ -7,20 +7,8 @@
 </head>
 <body>
     <h1>Personal Data Form</h1>
-    <form>
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name"><br><br>
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br><br>
-        <label for="age">Age:</label><br>
-        <input type="number" id="age" name="age"><br><br>
-        <label for="gender">Gender:</label><br>
-        <select id="gender" name="gender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-        </select><br><br>
-        <input type="submit" value="Submit">
-    </form>
+    <p>Please fill in the form below and click Submit. The data is sent to the backend and stored in a file.</p>
+    <p>Open <a href="/api/submissions">/api/submissions</a> to view stored submissions.</p>
+    <p>Start the server with: <code>npm start</code></p>
 </body>
 </html>
